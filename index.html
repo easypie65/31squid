@@ -179,6 +179,57 @@
             opacity: 0.9;
         }
 
+        /* Feeling Bubble */
+        .feeling-bubble {
+            display: none;
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 280px;
+            z-index: 1000;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .feeling-bubble p {
+            margin: 0;
+            font-size: 1em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .bubble-arrow {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        .feeling-bubble.show {
+            display: block;
+        }
+
         /* Motivation Box */
         .motivation-box {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
@@ -705,6 +756,56 @@
             </div>
 
         </section>
+
+        <!-- 12. 느낀점 -->
+        <section>
+            <h2>💭 프로젝트를 마치며 - 조원들의 느낀점</h2>
+            <p style="text-align: center; font-size: 1.3em; color: #666; margin-bottom: 30px;">
+                💬 각 조원을 클릭하면 느낀점을 볼 수 있어요!
+            </p>
+            <div class="team-grid">
+                <div class="member-card" onclick="toggleFeeling('feeling1')" style="cursor: pointer; position: relative;">
+                    <div class="member-name">김서정</div>
+                    <div class="member-role">웹페이지 작성</div>
+                    <div id="feeling1" class="feeling-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p>친구들과 같이 활동을 할 때 모두가 같이 협조적이고 협동적으로 잘 참여해줘서 아주 수월하게 할 수 있었고 그로 인해 훌륭한 프로젝트가 완성되어 뿌듯했었습니다.</p>
+                    </div>
+                </div>
+                <div class="member-card" onclick="toggleFeeling('feeling2')" style="cursor: pointer; position: relative;">
+                    <div class="member-name">이시윤</div>
+                    <div class="member-role">웹페이지 작성</div>
+                    <div id="feeling2" class="feeling-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p>자료를 서정이와 같이 찾아보면서 애들의 수학점수와 과학점수를 알아보았고 그래프가 증가하는 모습을 보았고 재미있었습니다.</p>
+                    </div>
+                </div>
+                <div class="member-card" onclick="toggleFeeling('feeling3')" style="cursor: pointer; position: relative;">
+                    <div class="member-name">권예한</div>
+                    <div class="member-role">발표</div>
+                    <div id="feeling3" class="feeling-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p>발표자로써 부담감이 굉장히 높았지만 다른 모둠원들이 열심히하는 모습을 보니 나 또한 열심히 발표에 참여할 수 있었다.</p>
+                    </div>
+                </div>
+                <div class="member-card" onclick="toggleFeeling('feeling4')" style="cursor: pointer; position: relative;">
+                    <div class="member-name">김해원</div>
+                    <div class="member-role">자료탐색</div>
+                    <div id="feeling4" class="feeling-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p>자료 조사를 할 때 친구들이 잘 협조해 주어서 수월하게 자료 조사를 하여서 빠르게 프로젝트를 완성할 수 있어서 좋았다.</p>
+                    </div>
+                </div>
+                <div class="member-card" onclick="toggleFeeling('feeling5')" style="cursor: pointer; position: relative;">
+                    <div class="member-name">변성현</div>
+                    <div class="member-role">자료탐색</div>
+                    <div id="feeling5" class="feeling-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p>친구들이 열심히 프로젝트에 참여해 주어서 좋았고 친구들과 함께 프로젝트를 완성하고 발표하는 과정이 값졌다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- Footer -->
@@ -717,6 +818,29 @@
     </footer>
 
     <script>
+        // Toggle feeling bubble
+        function toggleFeeling(id) {
+            // 모든 말풍선 숨기기
+            document.querySelectorAll('.feeling-bubble').forEach(bubble => {
+                if (bubble.id !== id) {
+                    bubble.classList.remove('show');
+                }
+            });
+            
+            // 클릭한 말풍선 토글
+            const bubble = document.getElementById(id);
+            bubble.classList.toggle('show');
+        }
+
+        // 카드 밖을 클릭하면 말풍선 닫기
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.member-card')) {
+                document.querySelectorAll('.feeling-bubble').forEach(bubble => {
+                    bubble.classList.remove('show');
+                });
+            }
+        });
+
         // Smooth scroll reveal animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
